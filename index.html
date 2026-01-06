@@ -6,52 +6,213 @@
     <title>微信聊天 - HU-dong</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="emoji.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="mobile.css">
 </head>
 <body>
+    <!-- 移动端导航栏 -->
+    <div class="mobile-navbar">
+        <div class="mobile-nav-item active" data-view="chats">
+            <i class="fas fa-comment"></i>
+            <span>消息</span>
+        </div>
+        <div class="mobile-nav-item" data-view="contacts">
+            <i class="fas fa-address-book"></i>
+            <span>通讯录</span>
+        </div>
+        <div class="mobile-nav-item" data-view="discover">
+            <i class="fas fa-compass"></i>
+            <span>发现</span>
+        </div>
+        <div class="mobile-nav-item" data-view="profile">
+            <i class="fas fa-user"></i>
+            <span>我</span>
+        </div>
+    </div>
+    
+    <!-- 移动端视图容器 -->
+    <div class="mobile-views">
+        <!-- 消息列表视图 -->
+        <div class="mobile-view active" id="chatsView">
+            <div class="mobile-header">
+                <span class="mobile-title">微信</span>
+                <button class="mobile-header-btn" id="mobileSearchBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="mobile-chat-list" id="mobileChatList">
+                <!-- 聊天列表内容 -->
+            </div>
+        </div>
+        
+        <!-- 通讯录视图 -->
+        <div class="mobile-view" id="contactsView">
+            <div class="mobile-header">
+                <span class="mobile-title">通讯录</span>
+            </div>
+            <div class="mobile-contacts-list" id="mobileContactsList">
+                <!-- 通讯录内容 -->
+            </div>
+        </div>
+        
+        <!-- 发现视图 -->
+        <div class="mobile-view" id="discoverView">
+            <div class="mobile-header">
+                <span class="mobile-title">发现</span>
+            </div>
+            <div class="mobile-discover-list">
+                <div class="discover-item">
+                    <i class="fas fa-circle-notch"></i>
+                    <span>朋友圈</span>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="discover-item">
+                    <i class="fas fa-qrcode"></i>
+                    <span>扫一扫</span>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="discover-item">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>购物</span>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="discover-item">
+                    <i class="fas fa-gamepad"></i>
+                    <span>游戏</span>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 个人中心视图 -->
+        <div class="mobile-view" id="profileView">
+            <div class="mobile-header">
+                <span class="mobile-title">我</span>
+                <button class="mobile-header-btn" id="mobileSettingsBtn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+            <div class="mobile-profile-header">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2307C160'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E我%3C/text%3E%3C/svg%3E" alt="头像" class="mobile-profile-avatar">
+                <div class="mobile-profile-info">
+                    <span class="mobile-profile-name">我</span>
+                    <span class="mobile-profile-id">微信号: wechat_user</span>
+                </div>
+            </div>
+            <div class="mobile-profile-menu">
+                <div class="profile-menu-item">
+                    <i class="fas fa-star"></i>
+                    <span>收藏</span>
+                </div>
+                <div class="profile-menu-item">
+                    <i class="fas fa-file-image"></i>
+                    <span>相册</span>
+                </div>
+                <div class="profile-menu-item">
+                    <i class="fas fa-wallet"></i>
+                    <span>钱包</span>
+                </div>
+                <div class="profile-menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>设置</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 移动端聊天详情视图 -->
+    <div class="mobile-chat-detail" id="mobileChatDetail">
+        <div class="mobile-chat-header">
+            <button class="mobile-back-btn" id="mobileBackBtn">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <span class="mobile-chat-title">好友1</span>
+            <button class="mobile-chat-more">
+                <i class="fas fa-ellipsis-h"></i>
+            </button>
+        </div>
+        <div class="mobile-chat-messages" id="mobileChatMessages">
+            <!-- 消息内容 -->
+        </div>
+        <div class="mobile-chat-input">
+            <button class="mobile-input-btn" id="mobileEmojiBtn">
+                <i class="far fa-smile"></i>
+            </button>
+            <input type="text" placeholder="输入消息..." id="mobileMessageInput">
+            <button class="mobile-input-btn" id="mobileSendBtn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
     <div class="container">
         <!-- 侧边栏 -->
         <div class="sidebar">
-            <div class="user-info">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2307C160'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E我%3C/text%3E%3C/svg%3E" alt="用户头像" class="avatar">
-                <span class="username">我</span>
+            <div class="user-info" id="currentUserInfo">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2307C160'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E我%3C/text%3E%3C/svg%3E" alt="用户头像" class="avatar" id="currentUserAvatar">
+                <span class="username" id="currentUsername">我</span>
+                <div class="user-status online"></div>
             </div>
             <div class="menu-icons">
-                <div class="menu-icon active" title="聊天">
+                <div class="menu-icon active" data-menu="chat" title="聊天">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
                     </svg>
                 </div>
-                <div class="menu-icon" title="通讯录">
+                <div class="menu-icon" data-menu="contacts" title="通讯录">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
                     </svg>
                 </div>
-                <div class="menu-icon" title="发现">
+                <div class="menu-icon" data-menu="discover" title="发现">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                     </svg>
                 </div>
-                <div class="menu-icon" title="我">
+                <div class="menu-icon" data-menu="profile" title="我">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <div class="theme-toggle" id="themeToggle" title="切换主题">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+                    </svg>
+                </div>
+                <div class="settings-btn" id="settingsBtn" title="设置">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
                     </svg>
                 </div>
             </div>
         </div>
 
         <!-- 聊天列表 -->
-        <div class="chat-list">
+        <div class="chat-list" id="chatListPanel">
             <div class="search-box">
                 <input type="text" placeholder="搜索" id="searchInput">
+                <button class="add-chat-btn" id="addChatBtn" title="新建聊天">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                    </svg>
+                </button>
             </div>
             <div class="chat-items" id="chatList">
-                <div class="chat-item active" data-chat="friend1">
+                <div class="chat-item active pinned" data-chat="friend1">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FF6B6B'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E朋%3C/text%3E%3C/svg%3E" alt="头像" class="avatar">
                     <div class="chat-info">
-                        <div class="chat-name">好友1</div>
+                        <div class="chat-name">
+                            好友1
+                            <span class="pinned-badge">置顶</span>
+                        </div>
                         <div class="chat-preview">你好！有什么可以帮助你的吗？</div>
                     </div>
-                    <div class="chat-time">10:30</div>
+                    <div class="chat-meta">
+                        <div class="chat-time">10:30</div>
+                        <div class="unread-badge" style="display: none;">0</div>
+                    </div>
                 </div>
                 <div class="chat-item" data-chat="friend2">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%234ECDC4'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E小%3C/text%3E%3C/svg%3E" alt="头像" class="avatar">
@@ -59,71 +220,212 @@
                         <div class="chat-name">小伙伴</div>
                         <div class="chat-preview">[图片]</div>
                     </div>
-                    <div class="chat-time">09:15</div>
+                    <div class="chat-meta">
+                        <div class="chat-time">09:15</div>
+                        <div class="unread-badge">3</div>
+                    </div>
                 </div>
-                <div class="chat-item" data-chat="group1">
+                <div class="chat-item muted" data-chat="group1">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23967BB6'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='30'%3E群聊%3C/text%3E%3C/svg%3E" alt="头像" class="avatar">
                     <div class="chat-info">
-                        <div class="chat-name">微信群聊</div>
+                        <div class="chat-name">
+                            微信群聊
+                            <span class="muted-badge">免打扰</span>
+                        </div>
                         <div class="chat-preview">群成员：5人</div>
                     </div>
-                    <div class="chat-time">昨天</div>
+                    <div class="chat-meta">
+                        <div class="chat-time">昨天</div>
+                        <i class="fas fa-bell-slash muted-icon"></i>
+                    </div>
+                </div>
+                <div class="chat-item" data-chat="friend3">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FFE66D'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E老%3C/text%3E%3C/svg%3E" alt="头像" class="avatar">
+                    <div class="chat-info">
+                        <div class="chat-name">老王</div>
+                        <div class="chat-preview">明天见！</div>
+                    </div>
+                    <div class="chat-meta">
+                        <div class="chat-time">昨天</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 通讯录面板 -->
+        <div class="contacts-panel" id="contactsPanel" style="display: none;">
+            <div class="panel-header">
+                <h2>通讯录</h2>
+                <button class="panel-close" id="closeContacts">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="contacts-search">
+                <input type="text" placeholder="搜索联系人" id="contactsSearch">
+            </div>
+            <div class="contacts-list">
+                <div class="contact-group">
+                    <div class="contact-group-title">新的朋友</div>
+                    <div class="contact-item" data-contact="newfriend">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <span>新的朋友</span>
+                    </div>
+                </div>
+                <div class="contact-group">
+                    <div class="contact-group-title">群聊</div>
+                    <div class="contact-item" data-contact="group1">
+                        <div class="contact-avatar group">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <span>微信群聊</span>
+                    </div>
+                    <div class="contact-item" data-contact="group2">
+                        <div class="contact-avatar group">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <span>工作群</span>
+                    </div>
+                </div>
+                <div class="contact-group">
+                    <div class="contact-group-title">好友</div>
+                    <div class="contact-item" data-contact="friend1">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FF6B6B'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E朋%3C/text%3E%3C/svg%3E" alt="头像" class="contact-avatar">
+                        <span>好友1</span>
+                    </div>
+                    <div class="contact-item" data-contact="friend2">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%234ECDC4'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E小%3C/text%3E%3C/svg%3E" alt="头像" class="contact-avatar">
+                        <span>小伙伴</span>
+                    </div>
+                    <div class="contact-item" data-contact="friend3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FFE66D'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E老%3C/text%3E%3C/svg%3E" alt="头像" class="contact-avatar">
+                        <span>老王</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 设置面板 -->
+        <div class="settings-panel" id="settingsPanel" style="display: none;">
+            <div class="panel-header">
+                <h2>设置</h2>
+                <button class="panel-close" id="closeSettings">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="settings-list">
+                <div class="settings-item">
+                    <div class="settings-item-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="settings-item-content">
+                        <span class="settings-item-title">个人资料</span>
+                        <span class="settings-item-desc">头像、昵称、个性签名</span>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="settings-item-content">
+                        <span class="settings-item-title">新消息通知</span>
+                        <span class="settings-item-desc">接收新消息通知</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <div class="settings-item-content">
+                        <span class="settings-item-title">深色模式</span>
+                        <span class="settings-item-desc">切换深色/浅色主题</span>
+                    </div>
+                    <label class="switch" id="themeSwitch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="settings-item-content">
+                        <span class="settings-item-title">隐私</span>
+                        <span class="settings-item-desc">朋友圈权限、添加方式</span>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="settings-item-content">
+                        <span class="settings-item-title">语言</span>
+                        <span class="settings-item-desc">简体中文</span>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="settings-item-content">
+                        <span class="settings-item-title">帮助与反馈</span>
+                        <span class="settings-item-desc">使用帮助、意见反馈</span>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="settings-item danger">
+                    <div class="settings-item-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <div class="settings-item-content">
+                        <span class="settings-item-title">退出登录</span>
+                        <span class="settings-item-desc">退出当前账户</span>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- 聊天窗口 -->
-        <div class="chat-window">
+        <div class="chat-window" id="chatWindow">
             <div class="chat-header" id="chatHeader">
-                <span class="chat-title">好友1</span>
+                <div class="chat-header-info">
+                    <span class="chat-title" id="chatTitle">好友1</span>
+                    <span class="chat-status" id="chatStatus"></span>
+                </div>
                 <div class="chat-actions">
-                    <button class="action-btn" title="视频通话">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                            <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
-                        </svg>
+                    <button class="action-btn" id="videoCallBtn" title="视频通话">
+                        <i class="fas fa-video"></i>
                     </button>
-                    <button class="action-btn" title="语音通话">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                        </svg>
+                    <button class="action-btn" id="voiceCallBtn" title="语音通话">
+                        <i class="fas fa-phone"></i>
+                    </button>
+                    <button class="action-btn" id="moreActionsBtn" title="更多">
+                        <i class="fas fa-ellipsis-h"></i>
                     </button>
                 </div>
             </div>
             
             <div class="chat-messages" id="chatMessages">
-                <div class="message received">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FF6B6B'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E朋%3C/text%3E%3C/svg%3E" alt="头像" class="message-avatar">
-                    <div class="message-content">
-                        <div class="message-bubble">
-                            你好！欢迎使用微信聊天网页版！😊
-                        </div>
-                        <div class="message-time">10:28</div>
+                <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                    <div class="typing-avatar">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FF6B6B'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E朋%3C/text%3E%3C/svg%3E" alt="头像">
                     </div>
-                </div>
-                <div class="message received">
-                    <div class="message-content">
-                        <div class="message-bubble">
-                            这里支持发送文字、表情和图片哦！
-                        </div>
-                        <div class="message-time">10:28</div>
-                    </div>
-                </div>
-                <div class="message sent">
-                    <div class="message-content">
-                        <div class="message-bubble">
-                            太棒了！我来试试发送表情包！😄
-                        </div>
-                        <div class="message-time">10:29</div>
-                    </div>
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2307C160'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E我%3C/text%3E%3C/svg%3E" alt="头像" class="message-avatar">
-                </div>
-                <div class="message received">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FF6B6B'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E朋%3C/text%3E%3C/svg%3E" alt="头像" class="message-avatar">
-                    <div class="message-content">
-                        <div class="message-bubble">
-                            💖 表情包发送成功！
-                        </div>
-                        <div class="message-time">10:30</div>
+                    <div class="typing-content">
+                        <span class="typing-dot"></span>
+                        <span class="typing-dot"></span>
+                        <span class="typing-dot"></span>
                     </div>
                 </div>
             </div>
@@ -132,55 +434,408 @@
             <div class="input-area">
                 <div class="input-tools">
                     <button class="tool-btn" id="emojiBtn" title="表情">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
-                        </svg>
+                        <i class="far fa-smile"></i>
                     </button>
                     <button class="tool-btn" id="imageBtn" title="图片">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-                        </svg>
+                        <i class="far fa-image"></i>
                     </button>
                     <button class="tool-btn" id="fileBtn" title="文件">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/>
-                        </svg>
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <button class="tool-btn" id="gifBtn" title="GIF表情">
+                        <i class="fas fa-film"></i>
+                    </button>
+                    <button class="tool-btn" id="screenshotBtn" title="截图">
+                        <i class="fas fa-camera"></i>
                     </button>
                 </div>
                 
+                <input type="file" id="fileInput" style="display: none;" multiple>
+                <input type="file" id="documentInput" style="display: none;" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt">
+                
                 <!-- 表情面板 -->
                 <div class="emoji-panel" id="emojiPanel">
-                    <div class="emoji-category">
-                        <button class="emoji-tab active" data-category="emoji">😀</button>
-                        <button class="emoji-tab" data-category="animal">🐱</button>
-                        <button class="emoji-tab" data-category="food">🍕</button>
-                        <button class="emoji-tab" data-category="sport">⚽</button>
-                        <button class="emoji-tab" data-category="heart">❤️</button>
-                        <button class="emoji-tab" data-category="flag">🚩</button>
+                    <div class="emoji-toolbar">
+                        <div class="emoji-category">
+                            <button class="emoji-tab active" data-category="emoji">
+                                <i class="far fa-smile"></i>
+                            </button>
+                            <button class="emoji-tab" data-category="animal">
+                                <i class="fas fa-cat"></i>
+                            </button>
+                            <button class="emoji-tab" data-category="food">
+                                <i class="fas fa-pizza-slice"></i>
+                            </button>
+                            <button class="emoji-tab" data-category="sport">
+                                <i class="fas fa-football"></i>
+                            </button>
+                            <button class="emoji-tab" data-category="heart">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="emoji-tab" data-category="flag">
+                                <i class="fas fa-flag"></i>
+                            </button>
+                            <button class="emoji-tab" data-category="sticker">
+                                <i class="fas fa-sticky-note"></i>
+                            </button>
+                        </div>
+                        <div class="emoji-actions">
+                            <button class="emoji-action-btn" id="recentEmojiBtn" title="最近使用">
+                                <i class="fas fa-history"></i>
+                            </button>
+                            <button class="emoji-action-btn" id="deleteEmojiBtn" title="删除">
+                                <i class="fas fa-backspace"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="emoji-list" id="emojiList">
-                        <!-- 表情会通过JS动态插入 -->
+                    <div class="emoji-list" id="emojiList"></div>
+                </div>
+
+                <!-- GIF面板 -->
+                <div class="gif-panel" id="gifPanel" style="display: none;">
+                    <div class="gif-search">
+                        <input type="text" placeholder="搜索GIF" id="gifSearch">
+                    </div>
+                    <div class="gif-grid" id="gifGrid">
+                        <div class="gif-item" data-gif="👍">👍</div>
+                        <div class="gif-item" data-gif="😂">😂</div>
+                        <div class="gif-item" data-gif="🙏">🙏</div>
+                        <div class="gif-item" data-gif="🤣">🤣</div>
+                        <div class="gif-item" data-gif="😊">😊</div>
+                        <div class="gif-item" data-gif="😍">😍</div>
+                        <div class="gif-item" data-gif="🎉">🎉</div>
+                        <div class="gif-item" data-gif="🥰">🥰</div>
+                        <div class="gif-item" data-gif="🤔">🤔</div>
+                        <div class="gif-item" data-gif="😎">😎</div>
+                        <div class="gif-item" data-gif="🤗">🤗</div>
+                        <div class="gif-item" data-gif="🥺">🥺</div>
+                    </div>
+                </div>
+
+                <!-- 贴纸面板 -->
+                <div class="sticker-panel" id="stickerPanel" style="display: none;">
+                    <div class="sticker-grid" id="stickerGrid">
+                        <div class="sticker-item" data-sticker="🐱">
+                            <span style="font-size: 40px;">🐱</span>
+                        </div>
+                        <div class="sticker-item" data-sticker="🐶">
+                            <span style="font-size: 40px;">🐶</span>
+                        </div>
+                        <div class="sticker-item" data-sticker="🐼">
+                            <span style="font-size: 40px;">🐼</span>
+                        </div>
+                        <div class="sticker-item" data-sticker="🦊">
+                            <span style="font-size: 40px;">🦊</span>
+                        </div>
+                        <div class="sticker-item" data-sticker="🐸">
+                            <span style="font-size: 40px;">🐸</span>
+                        </div>
+                        <div class="sticker-item" data-sticker="🐵">
+                            <span style="font-size: 40px;">🐵</span>
+                        </div>
+                        <div class="sticker-item" data-sticker="🦁">
+                            <span style="font-size: 40px;">🦁</span>
+                        </div>
+                        <div class="sticker-item" data-sticker="🐯">
+                            <span style="font-size: 40px;">🐯</span>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="input-box">
                     <textarea id="messageInput" placeholder="输入消息..." rows="1"></textarea>
-                    <button class="send-btn" id="sendBtn">发送</button>
+                    <div class="input-actions">
+                        <button class="send-btn" id="sendBtn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                        <button class="voice-btn" id="voiceBtn" title="语音输入">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- 空状态 -->
+        <div class="empty-state" id="emptyState">
+            <div class="empty-icon">
+                <i class="far fa-comments"></i>
+            </div>
+            <div class="empty-text">选择一位好友开始聊天吧</div>
+            <div class="empty-hint">发送消息、表情、图片...</div>
+        </div>
+    </div>
+
+    <!-- 消息操作菜单 -->
+    <div class="message-menu" id="messageMenu" style="display: none;">
+        <div class="message-menu-item" data-action="reply">
+            <i class="fas fa-reply"></i>
+            <span>引用</span>
+        </div>
+        <div class="message-menu-item" data-action="forward">
+            <i class="fas fa-share"></i>
+            <span>转发</span>
+        </div>
+        <div class="message-menu-item" data-action="copy">
+            <i class="fas fa-copy"></i>
+            <span>复制</span>
+        </div>
+        <div class="message-menu-item" data-action="collect">
+            <i class="fas fa-star"></i>
+            <span>收藏</span>
+        </div>
+        <div class="message-menu-item danger" data-action="delete">
+            <i class="fas fa-trash"></i>
+            <span>删除</span>
+        </div>
+        <div class="message-menu-item" data-action="recall" id="recallMenuItem" style="display: none;">
+            <i class="fas fa-undo"></i>
+            <span>撤回</span>
+        </div>
+    </div>
+
+    <!-- 引用消息显示 -->
+    <div class="quoted-message" id="quotedMessage" style="display: none;">
+        <div class="quoted-content">
+            <span class="quoted-name"></span>
+            <span class="quoted-text"></span>
+        </div>
+        <button class="quoted-close" id="quotedClose">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
 
     <!-- 图片预览模态框 -->
     <div class="modal" id="imageModal">
         <div class="modal-content">
-            <span class="modal-close">&times;</span>
+            <span class="modal-close" id="modalClose">&times;</span>
+            <div class="modal-toolbar">
+                <button class="modal-toolbar-btn" id="modalDownload" title="保存">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button class="modal-toolbar-btn" id="modalForward" title="转发">
+                    <i class="fas fa-share"></i>
+                </button>
+                <button class="modal-toolbar-btn" id="modalMore" title="更多">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+            </div>
             <img id="modalImage" src="" alt="图片预览">
         </div>
     </div>
 
-    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+    <!-- 转发模态框 -->
+    <div class="modal" id="forwardModal">
+        <div class="modal-content forward-modal-content">
+            <span class="modal-close" id="forwardModalClose">&times;</span>
+            <div class="modal-header">
+                <h3>选择联系人</h3>
+            </div>
+            <div class="modal-body">
+                <div class="forward-search">
+                    <input type="text" placeholder="搜索" id="forwardSearch">
+                </div>
+                <div class="forward-list" id="forwardList">
+                    <div class="forward-item" data-chat="friend1">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FF6B6B'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E朋%3C/text%3E%3C/svg%3E" alt="头像">
+                        <span>好友1</span>
+                        <i class="fas fa-check-circle selected-icon"></i>
+                    </div>
+                    <div class="forward-item" data-chat="friend2">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%234ECDC4'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E小%3C/text%3E%3C/svg%3E" alt="头像">
+                        <span>小伙伴</span>
+                        <i class="fas fa-check-circle selected-icon"></i>
+                    </div>
+                    <div class="forward-item" data-chat="friend3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FFE66D'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E老%3C/text%3E%3C/svg%3E" alt="头像">
+                        <span>老王</span>
+                        <i class="fas fa-check-circle selected-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" id="confirmForward">确定转发</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新建聊天模态框 -->
+    <div class="modal" id="newChatModal">
+        <div class="modal-content new-chat-modal-content">
+            <span class="modal-close" id="newChatModalClose">&times;</span>
+            <div class="modal-header">
+                <h3>新建聊天</h3>
+            </div>
+            <div class="modal-body">
+                <div class="new-chat-search">
+                    <input type="text" placeholder="搜索联系人" id="newChatSearch">
+                </div>
+                <div class="new-chat-list" id="newChatList">
+                    <div class="new-chat-item" data-contact="new1">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23967BB6'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E新%3C/text%3E%3C/svg%3E" alt="头像">
+                        <span>新朋友1</span>
+                        <button class="add-contact-btn"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="new-chat-item" data-contact="new2">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FFE66D'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E新%3C/text%3E%3C/svg%3E" alt="头像">
+                        <span>新朋友2</span>
+                        <button class="add-contact-btn"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="new-chat-item" data-contact="new3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FF6B6B'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E新%3C/text%3E%3C/svg%3E" alt="头像">
+                        <span>新朋友3</span>
+                        <button class="add-contact-btn"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 文件输入 -->
+    <input type="file" id="fileInput" style="display: none;" multiple>
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
     
+    <!-- 设置面板 -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <button class="settings-back" id="settingsBack">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>设置</h2>
+        </div>
+        
+        <div class="settings-profile">
+            <div class="profile-avatar-container">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%234ECDC4'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E我%3C/text%3E%3C/svg%3E" alt="头像" class="profile-avatar" id="profileAvatar">
+                <button class="change-avatar-btn" id="changeAvatarBtn">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+            <div class="profile-info">
+                <div class="profile-name">我</div>
+                <div class="profile-id">微信号: wechat_user</div>
+            </div>
+        </div>
+        
+        <div class="settings-list">
+            <div class="settings-item" id="nicknameSetting">
+                <i class="fas fa-id-card"></i>
+                <span>昵称</span>
+                <span class="settings-value" id="nicknameValue">我</span>
+                <i class="fas fa-chevron-right settings-arrow"></i>
+            </div>
+            
+            <div class="settings-item" id="statusSetting">
+                <i class="fas fa-comment-alt"></i>
+                <span>状态消息</span>
+                <span class="settings-value" id="statusValue">这个人很懒，什么都没写</span>
+                <i class="fas fa-chevron-right settings-arrow"></i>
+            </div>
+            
+            <div class="settings-divider"></div>
+            
+            <div class="settings-item toggle-item">
+                <i class="fas fa-moon"></i>
+                <span>深色模式</span>
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="settings-item toggle-item">
+                <i class="fas fa-bell"></i>
+                <span>新消息通知</span>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="settings-item toggle-item">
+                <i class="fas fa-volume-up"></i>
+                <span>声音提示</span>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="settings-divider"></div>
+            
+            <div class="settings-item" id="languageSetting">
+                <i class="fas fa-language"></i>
+                <span>语言</span>
+                <span class="settings-value">简体中文</span>
+                <i class="fas fa-chevron-right settings-arrow"></i>
+            </div>
+            
+            <div class="settings-item" id="aboutSetting">
+                <i class="fas fa-info-circle"></i>
+                <span>关于微信网页版</span>
+                <i class="fas fa-chevron-right settings-arrow"></i>
+            </div>
+            
+            <div class="settings-divider"></div>
+            
+            <div class="settings-item logout-item" id="logoutSetting">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>退出登录</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 昵称设置模态框 -->
+    <div class="modal" id="nicknameModal">
+        <div class="modal-content">
+            <span class="modal-close" id="nicknameModalClose">&times;</span>
+            <div class="modal-header">
+                <h3>设置昵称</h3>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="settings-input" id="nicknameInput" placeholder="请输入昵称" maxlength="20">
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" id="confirmNickname">确定</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 状态消息模态框 -->
+    <div class="modal" id="statusModal">
+        <div class="modal-content">
+            <span class="modal-close" id="statusModalClose">&times;</span>
+            <div class="modal-header">
+                <h3>设置状态消息</h3>
+            </div>
+            <div class="modal-body">
+                <textarea class="settings-textarea" id="statusInput" placeholder="请输入状态消息" maxlength="50"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" id="confirmStatus">确定</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast提示 -->
+    <div class="toast" id="toast"></div>
+
+    <!-- 聊天上下文菜单 -->
+    <div class="chat-context-menu" id="chatContextMenu">
+        <div class="context-menu-item" data-action="pin">
+            <i class="fas fa-thumbtack"></i>
+            <span>置顶聊天</span>
+        </div>
+        <div class="context-menu-item" data-action="mute">
+            <i class="fas fa-bell-slash"></i>
+            <span>开启/关闭免打扰</span>
+        </div>
+        <div class="context-menu-item danger" data-action="delete">
+            <i class="fas fa-trash"></i>
+            <span>删除聊天</span>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
