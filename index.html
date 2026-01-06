@@ -61,7 +61,7 @@
                 <span class="mobile-title">发现</span>
             </div>
             <div class="mobile-discover-list">
-                <div class="discover-item">
+                <div class="discover-item" id="momentsEntry">
                     <i class="fas fa-circle-notch"></i>
                     <span>朋友圈</span>
                     <i class="fas fa-chevron-right"></i>
@@ -82,6 +82,52 @@
                     <i class="fas fa-chevron-right"></i>
                 </div>
             </div>
+        </div>
+        
+        <!-- 朋友圈视图 -->
+        <div class="mobile-view" id="momentsView">
+            <div class="mobile-moments-page" id="mobileMomentsPage">
+                <div class="mobile-moments-header">
+                    <div class="mobile-moments-cover"></div>
+                    <div class="mobile-moments-user-info">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2307C160'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40'%3E我%3C/text%3E%3C/svg%3E" alt="头像" class="mobile-moments-avatar">
+                        <span class="mobile-moments-name">我</span>
+                    </div>
+                </div>
+                <div class="mobile-moments-container" id="mobileMomentsContainer">
+                    <!-- 朋友圈动态 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 发布朋友圈弹窗 -->
+        <div class="mobile-moments-publish" id="mobileMomentsPublish">
+            <div class="mobile-moments-publish-header">
+                <button class="mobile-moments-publish-cancel" id="momentsPublishCancel">取消</button>
+                <span class="mobile-moments-publish-title">发表</span>
+                <button class="mobile-moments-publish-submit" id="momentsPublishSubmit">发送</button>
+            </div>
+            <div class="mobile-moments-publish-content">
+                <textarea id="momentsPublishText" placeholder="分享新鲜事..."></textarea>
+            </div>
+            <div class="mobile-moments-publish-images" id="momentsPublishImages">
+                <!-- 选择的图片 -->
+            </div>
+            <div class="mobile-moments-publish-actions">
+                <div class="mobile-moments-publish-action" id="momentsSelectImage">
+                    <i class="fas fa-image"></i>
+                    <span>照片</span>
+                </div>
+                <div class="mobile-moments-publish-action" id="momentsSelectCamera">
+                    <i class="fas fa-camera"></i>
+                    <span>拍摄</span>
+                </div>
+                <div class="mobile-moments-publish-action" id="momentsSelectLocation">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>位置</span>
+                </div>
+            </div>
+            <input type="file" id="momentsImageInput" accept="image/*" multiple style="display: none;">
         </div>
         
         <!-- 个人中心视图 -->

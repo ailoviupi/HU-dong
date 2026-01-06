@@ -908,7 +908,317 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // 朋友圈功能
+    let momentsData = [];
+    let selectedMomentsImages = [];
+
+    function initMomentsFeatures() {
+        const momentsEntry = document.getElementById('momentsEntry');
+        const mobileMomentsPublish = document.getElementById('mobileMomentsPublish');
+        const momentsPublishCancel = document.getElementById('momentsPublishCancel');
+        const momentsPublishSubmit = document.getElementById('momentsPublishSubmit');
+        const momentsPublishText = document.getElementById('momentsPublishText');
+        const momentsSelectImage = document.getElementById('momentsSelectImage');
+        const momentsImageInput = document.getElementById('momentsImageInput');
+        const momentsPublishImages = document.getElementById('momentsPublishImages');
+
+        if (momentsEntry) {
+            momentsEntry.addEventListener('click', () => {
+                showMomentsView();
+            });
+        }
+
+        if (momentsPublishCancel) {
+            momentsPublishCancel.addEventListener('click', () => {
+                closeMomentsPublish();
+            });
+        }
+
+        if (momentsPublishSubmit) {
+            momentsPublishSubmit.addEventListener('click', () => {
+                publishMoments();
+            });
+        }
+
+        if (momentsSelectImage && momentsImageInput) {
+            momentsSelectImage.addEventListener('click', () => {
+                momentsImageInput.click();
+            });
+
+            momentsImageInput.addEventListener('change', (e) => {
+                handleMomentsImageSelect(e.target.files);
+            });
+        }
+
+        loadMomentsData();
+        renderMomentsPosts();
+    }
+
+    function showMomentsView() {
+        const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+        const mobileViews = document.querySelectorAll('.mobile-view');
+
+        mobileNavItems.forEach(item => item.classList.remove('active'));
+        mobileViews.forEach(view => view.classList.remove('active'));
+
+        const momentsView = document.getElementById('momentsView');
+        if (momentsView) {
+            momentsView.classList.add('active');
+        }
+    }
+
+    function openMomentsPublish() {
+        const mobileMomentsPublish = document.getElementById('mobileMomentsPublish');
+        if (mobileMomentsPublish) {
+            mobileMomentsPublish.classList.add('active');
+            document.getElementById('momentsPublishText').focus();
+        }
+    }
+
+    function closeMomentsPublish() {
+        const mobileMomentsPublish = document.getElementById('mobileMomentsPublish');
+        if (mobileMomentsPublish) {
+            mobileMomentsPublish.classList.remove('active');
+            document.getElementById('momentsPublishText').value = '';
+            selectedMomentsImages = [];
+            renderMomentsPublishImages();
+        }
+    }
+
+    function handleMomentsImageSelect(files) {
+        const momentsPublishImages = document.getElementById('momentsPublishImages');
+        if (!momentsPublishImages) return;
+
+        Array.from(files).forEach(file => {
+            if (selectedMomentsImages.length < 9) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    selectedMomentsImages.push(e.target.result);
+                    renderMomentsPublishImages();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    function renderMomentsPublishImages() {
+        const momentsPublishImages = document.getElementById('momentsPublishImages');
+        if (!momentsPublishImages) return;
+
+        momentsPublishImages.innerHTML = '';
+        selectedMomentsImages.forEach((image, index) => {
+            const imgDiv = document.createElement('div');
+            imgDiv.className = 'mobile-moments-publish-image-wrapper';
+            imgDiv.innerHTML = `
+                <img src="${image}" class="mobile-moments-publish-image">
+                <span class="mobile-moments-publish-image-remove" data-index="${index}">×</span>
+            `;
+
+            imgDiv.querySelector('.mobile-moments-publish-image-remove').addEventListener('click', (e) => {
+                e.stopPropagation();
+                selectedMomentsImages.splice(index, 1);
+                renderMomentsPublishImages();
+            });
+
+            momentsPublishImages.appendChild(imgDiv);
+        });
+    }
+
+    function publishMoments() {
+        const text = document.getElementById('momentsPublishText').value.trim();
+
+        if (!text && selectedMomentsImages.length === 0) {
+            showToast('请输入内容或选择图片', 'warning');
+            return;
+        }
+
+        const newPost = {
+            id: Date.now(),
+            avatar: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%2307C160"/%3E%3Ctext x="50" y="65" text-anchor="middle" fill="white" font-size="40"%3E我%3C/text%3E%3C/svg%3E',
+            name: '我',
+            content: text,
+            images: selectedMomentsImages.slice(),
+            time: getCurrentTime(),
+            likes: [],
+            comments: []
+        };
+
+        momentsData.unshift(newPost);
+        saveMomentsData();
+        renderMomentsPosts();
+        closeMomentsPublish();
+        showToast('发表成功', 'success');
+    }
+
+    function loadMomentsData() {
+        const saved = localStorage.getItem('momentsData');
+        if (saved) {
+            momentsData = JSON.parse(saved);
+        } else {
+            momentsData = getDefaultMomentsData();
+        }
+    }
+
+    function getDefaultMomentsData() {
+        return [
+            {
+                id: 1,
+                avatar: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23667fff"/%3E%3Ctext x="50" y="65" text-anchor="middle" fill="white" font-size="40"%3E小%3C/text%3E%3C/svg%3E',
+                name: '小程序开发者',
+                content: '今天完成了新功能开发，朋友圈移动端界面终于上线了！🎉',
+                images: [],
+                time: '10:30',
+                likes: ['好友1', '好友2', '产品经理'],
+                comments: [
+                    { user: '好友1', content: '太棒了！' },
+                    { user: '产品经理', content: '辛苦了，继续加油！' }
+                ]
+            },
+            {
+                id: 2,
+                avatar: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23ff6b6b"/%3E%3Ctext x="50" y="65" text-anchor="middle" fill="white" font-size="40"%3E美%3C/text%3E%3C/svg%3E',
+                name: '产品经理',
+                content: '周末的阳光真好，适合出门走走。',
+                images: [],
+                time: '09:15',
+                likes: ['好友1', '好友2'],
+                comments: []
+            },
+            {
+                id: 3,
+                avatar: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%2307C160"/%3E%3Ctext x="50" y="65" text-anchor="middle" fill="white" font-size="40"%3E我%3C/text%3E%3C/svg%3E',
+                name: '我',
+                content: '分享一本好书《JavaScript高级程序设计》，前端开发者必读！',
+                images: [],
+                time: '昨天',
+                likes: ['好友3', '同事A'],
+                comments: [
+                    { user: '好友3', content: '已加入书单' }
+                ]
+            }
+        ];
+    }
+
+    function saveMomentsData() {
+        localStorage.setItem('momentsData', JSON.stringify(momentsData));
+    }
+
+    function renderMomentsPosts() {
+        const container = document.getElementById('mobileMomentsContainer');
+        if (!container) return;
+
+        container.innerHTML = '';
+        momentsData.forEach(post => {
+            const postElement = createMomentsPostElement(post);
+            container.appendChild(postElement);
+        });
+    }
+
+    function createMomentsPostElement(post) {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'mobile-moments-post';
+        postDiv.dataset.postId = post.id;
+
+        const isLiked = post.likes.includes('我');
+
+        let imagesHtml = '';
+        if (post.images && post.images.length > 0) {
+            const displayImages = post.images.slice(0, 9);
+            imagesHtml = `
+                <div class="mobile-moments-post-images">
+                    ${displayImages.map(img => `<img src="${img}" class="mobile-moments-post-image">`).join('')}
+                </div>
+            `;
+        }
+
+        let commentsHtml = '';
+        if (post.comments && post.comments.length > 0) {
+            commentsHtml = `
+                <div class="mobile-moments-comments">
+                    ${post.comments.map(comment => `
+                        <div class="mobile-moments-comment">
+                            <span>${comment.user}:</span> ${comment.content}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        postDiv.innerHTML = `
+            <div class="mobile-moments-post-header">
+                <img src="${post.avatar}" class="mobile-moments-post-avatar">
+                <div class="mobile-moments-post-info">
+                    <div class="mobile-moments-post-name">${post.name}</div>
+                    <div class="mobile-moments-post-content">${post.content}</div>
+                </div>
+            </div>
+            ${imagesHtml}
+            <div class="mobile-moments-post-actions">
+                <div class="mobile-moments-action-btn ${isLiked ? 'liked' : ''}" data-action="like">
+                    <i class="${isLiked ? 'fas' : 'far'} fa-thumbs-up"></i>
+                </div>
+                <div class="mobile-moments-action-btn" data-action="comment">
+                    <i class="far fa-comment"></i>
+                </div>
+            </div>
+            ${commentsHtml}
+        `;
+
+        const likeBtn = postDiv.querySelector('[data-action="like"]');
+        const commentBtn = postDiv.querySelector('[data-action="comment"]');
+
+        if (likeBtn) {
+            likeBtn.addEventListener('click', () => {
+                toggleLike(post.id);
+            });
+        }
+
+        if (commentBtn) {
+            commentBtn.addEventListener('click', () => {
+                showCommentInput(post.id);
+            });
+        }
+
+        return postDiv;
+    }
+
+    function toggleLike(postId) {
+        const post = momentsData.find(p => p.id === postId);
+        if (!post) return;
+
+        const likeIndex = post.likes.indexOf('我');
+        if (likeIndex > -1) {
+            post.likes.splice(likeIndex, 1);
+            showToast('已取消点赞', 'info');
+        } else {
+            post.likes.push('我');
+            showToast('点赞成功', 'success');
+        }
+
+        saveMomentsData();
+        renderMomentsPosts();
+    }
+
+    function showCommentInput(postId) {
+        const comment = prompt('请输入评论：');
+        if (comment && comment.trim()) {
+            const post = momentsData.find(p => p.id === postId);
+            if (post) {
+                post.comments.push({
+                    user: '我',
+                    content: comment.trim()
+                });
+                saveMomentsData();
+                renderMomentsPosts();
+                showToast('评论成功', 'success');
+            }
+        }
+    }
+
     initMobileFeatures();
+
+    // 初始化朋友圈功能
+    initMomentsFeatures();
 });
 
 document.addEventListener('click', () => {
